@@ -46,3 +46,4 @@ urllib3==1.26.13
 Werkzeug==2.2.2
 wget==3.2
 zipp==3.11.0
+pip==23.0.1
