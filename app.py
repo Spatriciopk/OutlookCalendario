@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request,redirect,url_for,flash,jsonify,send_file,send_from_directory
-
+import subprocess
 
 from fpdf import FPDF
 from os import remove,getcwd
@@ -27,7 +27,7 @@ informacion =   {
         'strCedula' :  ""
         }
 datalist=[informacion]
-
+subprocess.check_call(['pip', 'install', '--upgrade', 'pip'])
 
 
 
