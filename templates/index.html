@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+   <HEAD>
+    <meta charset="UTF-8">
+      <TITLE>Cobro Seguro</TITLE>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+      <script src="{{url_for('static', filename='botones.js')}}"></script>
+      
+    </HEAD>
+   <BODY style="margin: 2.5%;">
+    <nav class="navbar bg-light" style=" width:100% ;height:10vw; background-color: white !important;">
+      <div    style=" width:20% ;height:100%; margin-right: 5%"  >
+        <a class="navbar-brand" href="#">
+          <img src="{{url_for ('static', filename = './images/bayteq.png')}}" alt="BAYTEQ" width="100%" height="100%">
+        </a>
+       
+      </div>
+      <h1 style="margin-left: 2%""><strong>SOLICITUDES DE APROBACIÓN</strong></h1>
+    </nav>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Contrato</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Id Plan</th>
+            <th scope="col">Status</th>
+            <th scope="col">Cambiar Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for data in dicData  %}
+          <tr >
+            <td>{{data.intContrato}}</td>
+            <td>{{data.strNombre}}</td>
+            <td>{{data.strIdplan}}</td>
+            <td>{{data.strStatus}}</td>
+            <form action="/enviar" method="post">
+                <td>
+                    <select name="plan" id="{{data.intContrato}}">
+                        <option value="En Curso|{{data.intContrato}}" selected> En Curso</option>
+                        <option value="Aprobado|{{data.intContrato}}">Aprobado</option>
+                        <option value="Denegado|{{data.intContrato}}">Denegado</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="submit" ">
+                </form>
+                </td>
+                <td>
+                   
+                    <a id="{{data.intContrato}}" href="{{url_for('modal',id=data.intContrato)}}" class=""> Información</a>
+                </td>
+       
+           
+          </tr>
+          {% endfor %}
+        
+        </tbody>
+      </table>
+    
+               <!-- Button trigger modal -->
+               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Información del contrato </h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div  style="width:50% ;height:5vw; display: flex; justify-content: center;margin-left: auto; margin-right: auto;">
+                        <img src="{{url_for ('static', filename = './images/bayteq.png')}}" alt="BAYTEQ" width="100%" height="100%"  style="margin-right: auto; margin-left: auto;">
+
+                      </div>
+
+                        <div class="form-group">
+                          <label ><strong>N° contrato: </strong></label>
+                          <label class="form-control" > {{contrato[0].numContrato}}</label>
+                        </div>
+
+                        <div class="form-group">
+                          <label ><strong>Nombre del titular: </strong></label>
+                          <label class="form-control" >  {{contrato[0].strNombre}} </label>
+                        </div>
+                     
+                        <div class="form-group">
+                          <label ><strong>Cédula del afilidado:</strong></label>
+                          <label class="form-control" >  {{contrato[0].strCedula}} </label>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label ><strong>Status de revisión:</strong></label>
+                          <label class="form-control" >   {{contrato[0].strStatus}} </label>
+                        </div>
+                     
+                        <div class="form-group">
+                          <label ><strong>Id del plan:</strong></label>
+                          <label class="form-control" >  {{contrato[0].idPlan}}  </label>
+                        </div>
+                
+                        <div class="form-group">
+                          <label ><strong>Nombre del plan:</strong></label>
+                          <label class="form-control" > {{contrato[0].strTipoPlan}}   </label>
+                        </div>
+
+                        <div class="form-group">
+                          <label ><strong>Nombre del afiliado:</strong></label>
+                          <label class="form-control" > {{contrato[0].nombreAfiliado}}  </label>
+                        </div>
+
+                        <div class="form-group">
+                          <label ><strong>Edad del afiliado:</strong></label>
+                          <label class="form-control" > {{contrato[0].edadAfiliado}}  </label>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+{% block modal %}{% endblock %}
+
+
+   </BODY>
+   {% block script %}
+
+   {% endblock %}
+</HTML>
